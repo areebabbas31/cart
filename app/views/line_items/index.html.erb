@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cart</th>
+  
+      <th colspan="20">Quantity</th>
+      <th colspan="20"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @line_items.each do |line_item| %>
+      <tr>
+     
+     
+       
+             <td colspan="20"><%= line_item.movie_id %></td>
+            
+         
+                <td colspan="20"><%= line_item.quantity %></td>
+      
+        
+        <td colspan="20"><%= link_to 'Delete', line_item, method: :delete, class:"btn btn-danger",data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Line Item', new_line_item_path %>

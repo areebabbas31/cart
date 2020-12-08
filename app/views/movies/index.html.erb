@@ -1,0 +1,117 @@
+<% # Writing the code to implement this API was very hard, I could just display all the movies because it can't handle providing more than 200 images for some reason so I had to write code to manipulate so many different things %>
+
+
+ <div id=”container” style=”width:100%;height:400px;”></div>
+
+
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',function(){
+   var myChart = Highcharts.chart('container',{
+chart: {
+type: 'bar'
+},
+title: {
+text: 'Fruit Consumption'
+},
+xAxis: {
+categories: ['Apples', 'Bananas', 'Oranges']
+},
+yAxis: {
+title: {
+text: 'Fruit eaten'
+}
+},
+series: [{
+name: 'Jane',
+data: [1, 0, 4]
+}, {
+name: 'John',
+data: [5, 7, 3]
+}]
+});
+});
+</script>
+
+
+<table>
+
+      <% 
+          $titles=Array.new(3000)
+         
+          TMDB::API.api_key = "ae9bf62cbe8d92562871c96ca5911b30" 
+
+           %>
+  
+   <% $mov=@movies
+      i=0 
+     $mov.each do |item|
+   $titles[i]=item.title
+          i=i+1
+      
+
+ end  %> 
+
+<%
+x=0
+# displaying hundred records as free version of API is slow
+while x<100 do
+
+
+%>
+
+
+<tr>
+
+
+<% 
+z=0
+abc=''
+while z<4 do
+ if x+z<@movies.length
+abc= TMDB::Movie.search($titles[z+x])
+end
+if abc.empty?!=true 
+
+
+ %>
+  <td>
+    <% if x+z<@movies.length %>
+<%= image_tag abc[0].poster, style: 'height:300px;width:250px; margin:40px' %><br />
+<p style='padding-left:75px;font-weight:bold'>
+ 
+<%= $mov[z+x].title %><br /><br />
+
+
+<%= form_for LineItem.new do |f| %>
+<%= f.hidden_field :movie_id, :value => $mov[z+x].id %>
+<span style="margin-left:50px"><%= f.submit "Add to Cart",class: 'btn btn-primary' %></span>
+<% end %>
+
+<% if current_user && current_user.admin %>
+<%= link_to 'Edit', edit_movie_path($mov[z+x]),class: 'btn btn-danger' %>
+<%= link_to 'Destroy',$mov[z+x] ,class: 'btn btn-primary', method: :delete, data: { confirm: 'Are you sure?' } %></p>
+<% end %>
+</td>
+<% end %>
+
+<% end %>
+<% z=z+1 %>
+<% end %>
+</tr>
+  <% x=x+5 %>
+
+  <% end %>       
+ 
+    
+ 
+</table>
+  
+<br>
+
+<%= link_to 'New Movie', new_movie_path %>
+
+
+
+
+

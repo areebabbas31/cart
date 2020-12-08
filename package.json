@@ -1,0 +1,18 @@
+{
+  "name": "ecom",
+  "private": true,
+  "dependencies": {
+    "channels": "^0.0.4",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "4.3.0",
+    "highcharts": "^8.2.2",
+    "jquery": "^3.5.1",
+    "turbolinks": "^5.2.0"
+  },
+  
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
+}
